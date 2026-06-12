@@ -27,7 +27,7 @@ void send_opcode_to_tdc(uint8_t opcode)
   
   while (SPI_I2S_GetFlagStatus(TDC_SPI_NAME, SPI_I2S_FLAG_TXE) == RESET);
   SPI_SendData8(TDC_SPI_NAME, opcode);
-  //Wait for all data to be tansmitted
+  //Wait for all data to be transmitted
   while (SPI_I2S_GetFlagStatus(TDC_SPI_NAME, SPI_I2S_FLAG_RXNE) == RESET);
   while (SPI_I2S_GetFlagStatus(TDC_SPI_NAME, SPI_I2S_FLAG_BSY) == SET);
 
@@ -134,6 +134,9 @@ void init_tdc_spi(void)
   GPIO_PinAFConfig(TDC_SPI_PORT, TDC_SPI_SCK_AF,  TDC_SPI_AFIO);
   
   RCC_APB1PeriphClockCmd(TDC_SPI_CLK, ENABLE);
+  
+  //The TDC-GP21 does only support the following SPI mode (Motorola specification)*:
+  //Clock Phase Bit = 1 Clock Polarity Bit = 0
   
   // CPOL = 0 --> clock is low when idle
   // CPHA = 0 --> data is sampled at the first edge

@@ -341,7 +341,7 @@ void tdc_test(void)
 {
   //REG_1 - Content of highest 8 bits of write register 1, to be used for testing the communication
   uint32_t test = tdc_read_n_bytes(1, OPCODE_READ_REG + 5);
-  if (test != 0x55)//If something written to the REG1, this walue will be another
+  if (test != 0x55)//If something written to the REG1, this value will be another
   {
     //error
     device_state_mask |= TDC_STATE_INIT_FAIL_FLAG;
